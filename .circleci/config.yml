@@ -7,7 +7,7 @@ commands:
       - run:
           . /etc/profile.d/01-custom-docker-setup.sh;
           cd ~/project/AngularFirebase/;
-          yarn global add file:package.json;
+          yarn install;
 
   deploy-frontend-app:
     parameters:
