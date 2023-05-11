@@ -1,0 +1,69 @@
+version: 2.1
+
+commands:
+  install-deps:
+    steps:
+
+      - run:
+          . /etc/profile.d/01-custom-docker-setup.sh;
+          cd ~/project/apps/zero/frontend/AngularApp/;
+          yarn global add file:package.json;
+          cd ~/project/apps/zero/cloud/firebase/;
+          yarn global add file:package.json;
+
+  deploy-frontend-app:
+    parameters:
+      app-env:
+          enum: ["preview","prod"]
+          default: "preview"
+          type: "enum"
+
+    steps:
+      - run:
+          . /etc/profile.d/01-custom-docker-setup.sh;
+          cd ~/AngularFirebase;
+          yarn build:<< parameters.app-env >>;
+          cd ~/project/apps/zero/cloud/firebase/;
+          mv angular.firebase.json ~/project/apps/zero/frontend/AngularApp/firebase.json;
+          echo $FIREBASE_TOKEN;
+          export FIREBASE_TOKEN=$FIREBASE_TOKEN;
+          npx firebase deploy --only hosting  --project 159461117267 --config "../../frontend/AngularApp/firebase.json"  --token $FIREBASE_TOKEN ;
+
+
+
+
+
+
+
+
+jobs:
+  fullstack-preview:
+    docker:
+      - image: windmillcode/docker-img-0:0.0.8
+
+    parallelism: 1
+
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - checkout
+      - install-deps
+      - deploy-frontend-app
+
+
+
+workflows:
+  test-build-deploy:
+    jobs:
+      - fullstack-preview:
+          context:
+              - org-global
+              - Context_0
+          filters:  # using regex filters requires the entire branch to match
+            branches:
+              only:  # only branches matching the below regex filters will run
+                - dev
+
+
+
+
