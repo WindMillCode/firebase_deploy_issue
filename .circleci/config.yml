@@ -6,7 +6,7 @@ commands:
 
       - run:
           . /etc/profile.d/01-custom-docker-setup.sh;
-          cd ~/project/AngularApp/;
+          cd ~/project/AngularFirebase/;
           yarn global add file:package.json;
 
   deploy-frontend-app:
@@ -19,7 +19,7 @@ commands:
     steps:
       - run:
           . /etc/profile.d/01-custom-docker-setup.sh;
-          cd ~/AngularFirebase;
+          cd ~/project/AngularFirebase/;
           yarn build:<< parameters.app-env >>;
           echo $FIREBASE_TOKEN;
           export FIREBASE_TOKEN=$FIREBASE_TOKEN;
