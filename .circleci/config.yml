@@ -10,17 +10,13 @@ commands:
           yarn install;
 
   deploy-frontend-app:
-    parameters:
-      app-env:
-          enum: ["preview","prod"]
-          default: "preview"
-          type: "enum"
+
 
     steps:
       - run:
           . /etc/profile.d/01-custom-docker-setup.sh;
           cd ~/project/AngularFirebase/;
-          yarn build:<< parameters.app-env >>;
+          yarn build;
           echo $FIREBASE_TOKEN;
           export FIREBASE_TOKEN=$FIREBASE_TOKEN;
           npx firebase deploy --only hosting  --project 159461117267 --config "../../frontend/AngularApp/firebase.json"  --token $FIREBASE_TOKEN ;
