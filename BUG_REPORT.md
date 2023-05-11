@@ -1,5 +1,7 @@
 # Cant deploy with firebase
 
+## Resources
+https://youtu.be/S5yPy_zmSEk
 ## Expected Behavior
 * when I run the firebase deploy command deploy the application to firebase
 
@@ -11,15 +13,13 @@
 ## Steps to Reproduce
 
 
-1. 
-2.
-3.
-4.
+1. watch the video and do all the steps in the video https://youtu.be/S5yPy_zmSEk
+
 
 ## Environment
 |property|value|data|
 |:------|:------:|------|
-||||
+|Firebase-tools|11.28.0||
 ||||
 ||||
 ||||
